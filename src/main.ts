@@ -5,9 +5,18 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 import diegoImage from "./assets/Diego1.png";
+import dmonImage from "./assets/DMON.png";
 import previewHero from "./assets/hero1.png";
 import previewAbout from "./assets/hero2.png";
 import previewProjects from "./assets/hero3.png";
+import previewWork from "./assets/hero4.png";
+import previewContact from "./assets/hero5.png";
+import capOne from "./assets/cap1.png";
+import capTwo from "./assets/cap7.png";
+import capThree from "./assets/cap4.png";
+import capFour from "./assets/cap5.png";
+import capFive from "./assets/cap6.png";
+import capSix from "./assets/cap8.png";
 import angularIcon from "./assets/svgs/angular.svg";
 import cssIcon from "./assets/svgs/css.svg";
 import gitIcon from "./assets/svgs/git.svg";
@@ -40,10 +49,10 @@ const skillIcons = [
   { label: "JavaScript", icon: javascriptIcon },
   { label: "HTML", icon: htmlIcon },
   { label: "CSS", icon: cssIcon },
-  { label: "Vite", icon: viteIcon },
   { label: "Gsap", icon: gsapIcon },
   { label: "WebGL", icon: webglIcon },
   { label: "ThreeJs", icon: threeIcon },
+  { label: "Vite", icon: viteIcon },
   { label: "Java", icon: javaIcon },
   { label: "Spring Boot", icon: springIcon },
   { label: "Jenkins", icon: jenkinsIcon },
@@ -175,6 +184,14 @@ app.innerHTML = `
   <section class="projects" id="projects">
     <canvas class="projects-bg-canvas" aria-hidden="true"></canvas>
     <svg class="path-svg" viewBox="0 0 1600 3200" preserveAspectRatio="xMidYMin meet">
+      <defs>
+        <linearGradient id="skillsPathGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#caff26" />
+          <stop offset="38%" stop-color="#5fbd46" />
+          <stop offset="72%" stop-color="#33d7c9" />
+          <stop offset="100%" stop-color="#caff26" />
+        </linearGradient>
+      </defs>
       <path
         id="scrollPath"
         d="
@@ -191,6 +208,12 @@ app.innerHTML = `
         "
       />
     </svg>
+
+    <div class="skills-section-title" aria-label="Mis skills">
+      <span>
+        <i><em>M</em></i><i>I</i><i>S</i><i>&nbsp;</i><i>S</i><i><em>K</em></i><i>I</i><i>L</i><i>L</i><i><em>S</em></i>
+      </span>
+    </div>
 
     <div class="layout">
       <aside class="left">
@@ -260,7 +283,7 @@ app.innerHTML = `
         </div>
 
         <div class="project-item" data-img="14">
-          <h2>SQL</h2>
+          <h2>PostgreSQL</h2>
         </div>
 
         <div class="project-item" data-img="15">
@@ -269,6 +292,93 @@ app.innerHTML = `
       </aside>
 
     </div>
+  </section>
+
+  <section class="glow-section" id="glow">
+    <canvas class="glow-canvas" aria-hidden="true"></canvas>
+    <div class="glow-section-grain" aria-hidden="true"></div>
+    <div class="glow-content">
+      <div class="projects-section-title" aria-label="Mis proyectos">
+        <span>MIS PROYECTOS</span>
+      </div>
+      <p class="projects-section-note">Cada proyecto es una oportunidad para aprender, experimentar y superar mis limites.</p>
+      <div class="case-viewport" aria-label="Proyectos destacados">
+        <div class="case-track">
+          <article class="case-card is-featured">
+            <h3>R-K</h3>
+            <p>Identity + Art Direction</p>
+            <img src="${capOne}" alt="Proyecto R-K" />
+          </article>
+          <div class="case-stack">
+            <article class="case-card is-small">
+              <h3>Prop Films</h3>
+              <p>Exploration</p>
+              <img src="${capTwo}" alt="Proyecto Prop Films" />
+            </article>
+            <article class="case-card is-small">
+              <h3>Buyt Bags</h3>
+              <p>Web Development</p>
+              <img src="${capThree}" alt="Proyecto Buyt Bags" />
+            </article>
+          </div>
+          <article class="case-card is-featured">
+            <h3>Interface Lab</h3>
+            <p>Creative Frontend</p>
+            <img src="${capFour}" alt="Proyecto Interface Lab" />
+          </article>
+          <article class="case-card is-medium">
+            <h3>Motion UI</h3>
+            <p>Interaction System</p>
+            <img src="${capFive}" alt="Proyecto Motion UI" />
+          </article>
+          <div class="case-stack">
+            <article class="case-card is-small">
+              <h3>Visual Grid</h3>
+              <p>Layout Studies</p>
+              <img src="${capTwo}" alt="Proyecto Visual Grid" />
+            </article>
+            <article class="case-card is-small">
+              <h3>Signal Kit</h3>
+              <p>Interface Details</p>
+              <img src="${capThree}" alt="Proyecto Signal Kit" />
+            </article>
+          </div>
+          <article class="case-card is-featured">
+            <h3>Data Flow</h3>
+            <p>Product Experience</p>
+            <img src="${capSix}" alt="Proyecto Data Flow" />
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="black-section" id="contact">
+    <h2 class="contact-title">Contacto</h2>
+    <div class="contact-details" aria-label="Datos de contacto">
+      <a href="tel:+51991127220">+51 991127220</a>
+      <a href="mailto:diegorutti26@gmail.com">diegorutti26@gmail.com</a>
+      <span>LIM, PERU</span>
+    </div>
+    <img class="contact-portrait" src="${dmonImage}" alt="Diego Rutti" />
+    <nav class="contact-socials" aria-label="Redes sociales">
+      <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+        <span>LinkedIn</span>
+        <strong>@diegorutti</strong>
+      </a>
+      <a href="https://www.facebook.com/" target="_blank" rel="noreferrer">
+        <span>Facebook</span>
+        <strong>@diegorutti</strong>
+      </a>
+      <a href="https://twitter.com/" target="_blank" rel="noreferrer">
+        <span>Twitter</span>
+        <strong>@diegorutti</strong>
+      </a>
+      <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
+        <span>Instagram</span>
+        <strong>@diegorutti</strong>
+      </a>
+    </nav>
   </section>
 
   <aside class="skills-orbit-panel" aria-label="Icono de skill activo">
@@ -300,6 +410,14 @@ app.innerHTML = `
       <span class="section-preview-frame"><img src="${previewProjects}" alt="" class="section-preview-image" /></span>
       <span class="section-preview-label">SKILLS</span>
     </a>
+    <a href="#glow" class="section-preview-item" data-preview=".glow-section" aria-label="Ir a Proyectos">
+      <span class="section-preview-frame"><img src="${previewWork}" alt="" class="section-preview-image" /></span>
+      <span class="section-preview-label">PROYECTOS</span>
+    </a>
+    <a href="#contact" class="section-preview-item" data-preview=".black-section" aria-label="Ir a Contacto">
+      <span class="section-preview-frame"><img src="${previewContact}" alt="" class="section-preview-image" /></span>
+      <span class="section-preview-label">CONTACTO</span>
+    </a>
   </aside>
 `;
 
@@ -307,8 +425,19 @@ const peruTime = document.querySelector<HTMLElement>("#peru-time");
 const sectionPreviewItems = gsap.utils.toArray<HTMLElement>(".section-preview-item");
 
 function setActiveSectionPreview(trigger: string) {
+  const activeIndex = sectionPreviewItems.findIndex((item) => item.dataset.preview === trigger);
+  const maxVisibleItems = Math.min(3, sectionPreviewItems.length);
+  const maxVisibleStart = Math.max(sectionPreviewItems.length - maxVisibleItems, 0);
+  const visibleStart = activeIndex >= sectionPreviewItems.length - 1
+    ? maxVisibleStart
+    : Math.min(Math.max(activeIndex - 1, 0), maxVisibleStart);
+
   sectionPreviewItems.forEach((item) => {
+    const itemIndex = sectionPreviewItems.indexOf(item);
+    const isVisible = itemIndex >= visibleStart && itemIndex < visibleStart + maxVisibleItems;
+
     item.classList.toggle("is-active", item.dataset.preview === trigger);
+    item.classList.toggle("is-preview-hidden", !isVisible);
   });
 }
 
@@ -411,6 +540,7 @@ navClusters.forEach((cluster) => {
 });
 
 const smokeCanvas = document.querySelector<HTMLCanvasElement>(".smoke-canvas");
+const glowCanvas = document.querySelector<HTMLCanvasElement>(".glow-canvas");
 
 if (!smokeCanvas) {
   throw new Error("Smoke canvas element was not found.");
@@ -549,6 +679,126 @@ function renderSmoke(time: number) {
 resizeSmoke();
 window.addEventListener("resize", resizeSmoke);
 requestAnimationFrame(renderSmoke);
+
+if (glowCanvas) {
+  const glowCanvasEl = glowCanvas;
+  const glowScene = new THREE.Scene();
+  const glowCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const glowRenderer = new THREE.WebGLRenderer({
+    canvas: glowCanvasEl,
+    antialias: false,
+    alpha: false
+  });
+  const glowUniforms = {
+    uTime: { value: 0 },
+    uResolution: { value: new THREE.Vector2(1, 1) }
+  };
+  const glowMaterial = new THREE.ShaderMaterial({
+    uniforms: glowUniforms,
+    vertexShader: `
+      varying vec2 vUv;
+
+      void main() {
+        vUv = uv;
+        gl_Position = vec4(position.xy, 0.0, 1.0);
+      }
+    `,
+    fragmentShader: `
+      precision highp float;
+
+      uniform float uTime;
+      uniform vec2 uResolution;
+      varying vec2 vUv;
+
+      float hash(vec2 p) {
+        return fract(sin(dot(p, vec2(41.7, 289.1))) * 45758.5453);
+      }
+
+      float noise(vec2 p) {
+        vec2 i = floor(p);
+        vec2 f = fract(p);
+        vec2 u = f * f * (3.0 - 2.0 * f);
+
+        return mix(
+          mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+          mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
+          u.y
+        );
+      }
+
+      float fbm(vec2 p) {
+        float v = 0.0;
+        float a = 0.5;
+
+        for (int i = 0; i < 5; i++) {
+          v += a * noise(p);
+          p = mat2(1.62, 1.08, -1.08, 1.62) * p;
+          a *= 0.52;
+        }
+
+        return v;
+      }
+
+      float glowBlob(vec2 uv, vec2 center, vec2 size) {
+        vec2 p = (uv - center) / size;
+        return exp(-dot(p, p) * 1.65);
+      }
+
+      void main() {
+        vec2 uv = vUv;
+        float aspect = uResolution.x / uResolution.y;
+        vec2 p = vec2((uv.x - 0.5) * aspect + 0.5, uv.y);
+        float t = uTime * 0.13;
+        vec2 drift = vec2(t, sin(uTime * 0.18) * 0.08);
+
+        float field = fbm(p * 2.15 - drift);
+        field += 0.55 * fbm(p * 4.1 + vec2(-t * 0.8, t * 0.35));
+        field = smoothstep(0.28, 1.04, field);
+
+        float leftShade = smoothstep(0.36, 0.0, uv.x);
+        float mainGlow = glowBlob(uv, vec2(0.78 + sin(uTime * 0.11) * 0.06, 0.54 + cos(uTime * 0.09) * 0.08), vec2(0.56, 0.5));
+        float hotGlow = glowBlob(uv, vec2(1.02 + sin(uTime * 0.07) * 0.08, 0.26 + cos(uTime * 0.13) * 0.1), vec2(0.42, 0.34));
+        float lowerGlow = glowBlob(uv, vec2(0.82 + cos(uTime * 0.1) * 0.05, 0.88), vec2(0.54, 0.35));
+        float darkPool = glowBlob(uv, vec2(0.22 + sin(uTime * 0.08) * 0.04, 0.72), vec2(0.34, 0.3));
+
+        vec3 darkBlue = vec3(0.035, 0.075, 0.095);
+        vec3 deepGreen = vec3(0.0, 0.16, 0.025);
+        vec3 vividGreen = vec3(0.0, 0.86, 0.02);
+        vec3 acid = vec3(0.72, 1.0, 0.04);
+
+        vec3 color = mix(darkBlue, deepGreen, smoothstep(0.04, 0.55, uv.x));
+        color = mix(color, vividGreen, clamp(mainGlow * 0.78 + field * 0.28, 0.0, 1.0));
+        color = mix(color, acid, clamp(hotGlow * 0.92 + lowerGlow * 0.34, 0.0, 1.0));
+        color = mix(color, vec3(0.0, 0.025, 0.01), darkPool * 0.86);
+        color = mix(color, darkBlue * 0.65, leftShade * 0.82);
+        color += (field - 0.5) * 0.045;
+
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `
+  });
+
+  glowScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), glowMaterial));
+  glowRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.2));
+
+  function resizeGlow() {
+    const width = glowCanvasEl.clientWidth;
+    const height = glowCanvasEl.clientHeight;
+
+    glowRenderer.setSize(width, height, false);
+    glowUniforms.uResolution.value.set(width, height);
+  }
+
+  function renderGlow(time: number) {
+    glowUniforms.uTime.value = time * 0.001;
+    glowRenderer.render(glowScene, glowCamera);
+    requestAnimationFrame(renderGlow);
+  }
+
+  resizeGlow();
+  window.addEventListener("resize", resizeGlow);
+  requestAnimationFrame(renderGlow);
+}
 
 const projectsCanvas = document.querySelector<HTMLCanvasElement>(".projects-bg-canvas");
 
@@ -896,15 +1146,23 @@ requestAnimationFrame(renderProjectsBackground);
 
 gsap.registerPlugin(ScrollTrigger);
 
-[".smoke-hero", ".portrait-section", ".projects"].forEach((trigger) => {
+[
+  { trigger: ".smoke-hero", start: "top center", end: "bottom center" },
+  { trigger: ".portrait-section", start: "top center", end: "bottom center" },
+  { trigger: ".projects", start: "top center", end: "bottom center" },
+  { trigger: ".glow-section", start: "top center", end: "bottom top" },
+  { trigger: ".black-section", start: "top 12%", end: "bottom center" }
+].forEach(({ trigger, start, end }) => {
   ScrollTrigger.create({
     trigger,
-    start: "top center",
-    end: "bottom center",
+    start,
+    end,
     onEnter: () => setActiveSectionPreview(trigger),
     onEnterBack: () => setActiveSectionPreview(trigger)
   });
 });
+
+setActiveSectionPreview(".smoke-hero");
 
 ScrollTrigger.create({
   trigger: ".smoke-hero",
@@ -1130,11 +1388,11 @@ gsap.to([".hero-footer", ".hero-title", ".hero-cta"], {
 /* ========================= */
 
 const lenis = new Lenis({
-  duration: 2.25,
+  duration: 1.45,
   smoothWheel: true,
   syncTouch: false,
-  wheelMultiplier: 0.52,
-  touchMultiplier: 0.86,
+  wheelMultiplier: 0.8,
+  touchMultiplier: 1,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
 });
 
@@ -1148,7 +1406,11 @@ sectionPreviewItems.forEach((item) => {
     if (!target) return;
 
     event.preventDefault();
-    lenis.scrollTo(target, {
+    const scrollTarget = hash === "#contact"
+      ? target.offsetTop + window.innerHeight * 0.82
+      : target;
+
+    lenis.scrollTo(scrollTarget, {
       duration: 1.35,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
     });
@@ -1264,9 +1526,9 @@ function triggerPortraitGlitch() {
 function startPortraitGlitchLoop() {
   if (portraitGlitchLoop) return;
 
-  portraitGlitchLoop = gsap.delayedCall(gsap.utils.random(10, 12), function loop() {
+  portraitGlitchLoop = gsap.delayedCall(gsap.utils.random(5, 7), function loop() {
     triggerPortraitGlitch();
-    portraitGlitchLoop = gsap.delayedCall(gsap.utils.random(14, 17), loop);
+    portraitGlitchLoop = gsap.delayedCall(gsap.utils.random(10, 12), loop);
   });
 }
 
@@ -1469,6 +1731,256 @@ ScrollTrigger.create({
   onLeaveBack: stopPortraitGlitchLoop
 });
 
+const skillsTitleLetters = gsap.utils.toArray<HTMLElement>(".skills-section-title i");
+
+gsap.timeline({
+  scrollTrigger: {
+    trigger: ".skills-section-title",
+    start: "top 82%",
+    end: "top 18%",
+    scrub: 1.6
+  }
+})
+  .fromTo(".skills-section-title span", {
+    y: 48,
+    opacity: 0,
+    filter: "blur(28px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.28))"
+  }, {
+    y: 0,
+    opacity: 1,
+    filter: "blur(0px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.28))",
+    duration: 0.72,
+    ease: "power3.out"
+  })
+  .fromTo(skillsTitleLetters, {
+    x: (index) => (index - (skillsTitleLetters.length - 1) / 2) * 44
+  }, {
+    x: 0,
+    duration: 0.72,
+    ease: "power3.out"
+  }, "<")
+  .to(".skills-section-title span", {
+    y: -42,
+    opacity: 0,
+    filter: "blur(16px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.18))",
+    duration: 0.68,
+    ease: "power3.inOut"
+  }, "+=1.2")
+  .to(skillsTitleLetters, {
+    x: (index) => (index - (skillsTitleLetters.length - 1) / 2) * 34,
+    duration: 0.68,
+    ease: "power3.inOut"
+  }, "<");
+
+const caseTrack = document.querySelector<HTMLElement>(".case-track");
+
+if (caseTrack) {
+  const getCaseTrackOverflow = () => Math.max(0, caseTrack.scrollWidth - window.innerWidth + 28);
+  const getCaseTrackLead = () => Math.min(170, getCaseTrackOverflow() * 0.1);
+
+  gsap.fromTo(".case-card", {
+    y: -120,
+    opacity: 0,
+    filter: "blur(9px)"
+  }, {
+    y: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    ease: "none",
+    stagger: 0.08,
+    scrollTrigger: {
+      trigger: ".glow-section",
+      start: "top 56%",
+      end: "top 24%",
+      scrub: 1.2
+    }
+  });
+
+  gsap.to(caseTrack, {
+    x: () => -getCaseTrackLead(),
+    ease: "none",
+    overwrite: true,
+    scrollTrigger: {
+      trigger: ".glow-section",
+      start: "top 92%",
+      end: "top 6%",
+      scrub: 1.35,
+      invalidateOnRefresh: true
+    }
+  });
+
+  gsap.fromTo(caseTrack, {
+    x: () => -getCaseTrackLead()
+  }, {
+    x: () => -getCaseTrackOverflow(),
+    ease: "none",
+    overwrite: true,
+    immediateRender: false,
+    scrollTrigger: {
+      trigger: ".glow-section",
+      start: "top top",
+      end: "+=260%",
+      scrub: 1.45,
+      pin: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+}
+
+gsap.timeline({
+  scrollTrigger: {
+    trigger: ".glow-section",
+    start: "top 62%",
+    end: "top 32%",
+    scrub: 1.3
+  }
+})
+  .fromTo([".projects-section-title", ".projects-section-note"], {
+    y: 34,
+    opacity: 0,
+    filter: "blur(14px)"
+  }, {
+    y: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    duration: 0.28,
+    ease: "power2.out",
+    stagger: 0.08
+  });
+
+gsap.fromTo(".contact-title", {
+  x: "112vw",
+  opacity: 0.28,
+  filter: "blur(5px)"
+}, {
+  x: 0,
+  opacity: 1,
+  filter: "blur(0px)",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".black-section",
+    start: "top 92%",
+    end: "top 18%",
+    scrub: 1.25
+  }
+});
+
+ScrollTrigger.create({
+  trigger: ".contact-title",
+  start: "top 24px",
+  endTrigger: ".black-section",
+  end: "bottom top",
+  pin: ".contact-title",
+  pinSpacing: false
+});
+
+gsap.fromTo(".contact-portrait", {
+  x: 90,
+  y: 24,
+  opacity: 0,
+  filter: "blur(6px) grayscale(0.15) contrast(1.08)"
+}, {
+  x: 0,
+  y: 0,
+  opacity: 1,
+  filter: "blur(0px) grayscale(0.15) contrast(1.08)",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".black-section",
+    start: "top 22%",
+    end: "top -18%",
+    scrub: 1.2
+  }
+});
+
+gsap.to(".contact-portrait", {
+  opacity: 0,
+  filter: "blur(5px) grayscale(0.15) contrast(1.08)",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".black-section",
+    start: "bottom 72%",
+    end: "bottom 30%",
+    scrub: 1.1
+  }
+});
+
+const contactDetailItems = gsap.utils.toArray<HTMLElement>(".contact-details > *");
+const contactDetailRanges = [
+  { start: "top 78%", end: "top 54%" },
+  { start: "top 10%", end: "top -14%" },
+  { start: "top -18%", end: "top -42%" }
+];
+
+gsap.set(contactDetailItems, {
+  y: 420,
+  opacity: 0,
+  filter: "blur(5px)"
+});
+
+contactDetailItems.forEach((item, index) => {
+  const range = contactDetailRanges[index] ?? contactDetailRanges[contactDetailRanges.length - 1];
+
+  gsap.to(item, {
+    y: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".black-section",
+      start: range.start,
+      end: range.end,
+      scrub: 1.15
+    }
+  });
+});
+
+gsap.fromTo(".contact-socials a", {
+  y: 80,
+  opacity: 0,
+  filter: "blur(4px)",
+  rotate: 0
+}, {
+  y: 0,
+  opacity: 1,
+  filter: "blur(0px)",
+  rotate: 0,
+  ease: "none",
+  stagger: 0.08,
+  scrollTrigger: {
+    trigger: ".contact-socials",
+    start: "top 120%",
+    end: "top 92%",
+    scrub: 0.75
+  }
+});
+
+gsap.to(".glow-content", {
+  opacity: 0.82,
+  filter: "blur(1.5px)",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".black-section",
+    start: "top 92%",
+    end: "top 42%",
+    scrub: 1.55
+  }
+});
+
+gsap.to(".case-viewport", {
+  y: -180,
+  opacity: 0.18,
+  filter: "blur(3px)",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".black-section",
+    start: "top 96%",
+    end: "top 34%",
+    scrub: 1.35
+  }
+});
+
 const infoGlitchTimeline = gsap.timeline({
   paused: true,
   repeat: -1,
@@ -1602,7 +2114,7 @@ gsap.to(path, {
   ease: "none",
   scrollTrigger: {
     trigger: ".projects",
-    start: "18% top",
+    start: "top 82%",
     end: "bottom bottom",
     scrub: 1.4
   }
@@ -1610,7 +2122,8 @@ gsap.to(path, {
 
 gsap.set(".project-item", {
   y: 120,
-  opacity: 0
+  opacity: 0,
+  filter: "blur(18px)"
 });
 
 const projectsFillTimeline = gsap.timeline({ paused: true });
@@ -1625,6 +2138,7 @@ projectsFillTimeline
   .to(".project-item", {
     y: 0,
     opacity: 1,
+    filter: "blur(0px)",
     duration: 0.8,
     stagger: 0.05,
     ease: "power4.out"
@@ -1689,12 +2203,29 @@ const skillsOrbitCenterIcon = document.querySelector<HTMLImageElement>(".skills-
 const skillsOrbitName = document.querySelector<HTMLElement>(".skills-orbit-name");
 const skillsOrbitNodes = gsap.utils.toArray<HTMLDivElement>(".skills-orbit-node");
 
-const orbitNodeSkillIndexes = skillsOrbitNodes.map((node, nodeIndex) => (
-  Number(node.dataset.skillIndex ?? nodeIndex + 1)
-));
 let centerSkillIndex = 0;
 let skillOrbitTimeline: gsap.core.Timeline | null = null;
+let skillOrbitRevealTimeline: gsap.core.Timeline | null = null;
 let pendingSkillIndex: number | null = null;
+let isSkillOrbitVisible = false;
+
+function syncOrbitNodes(activeCenterIndex: number) {
+  const orbitSkillIndexes = skillIcons
+    .map((_, index) => index)
+    .filter((index) => index !== activeCenterIndex);
+
+  skillsOrbitNodes.forEach((node, nodeIndex) => {
+    const skillIndex = orbitSkillIndexes[nodeIndex];
+    const skill = skillIcons[skillIndex];
+    const image = node.querySelector<HTMLImageElement>("img");
+
+    if (!skill || !image) return;
+
+    node.dataset.skillIndex = String(skillIndex);
+    image.src = skill.icon;
+    image.alt = skill.label;
+  });
+}
 
 if (items.length === 0) {
   throw new Error("Project items were not found.");
@@ -1705,14 +2236,90 @@ gsap.set(".skills-orbit-panel", {
   x: 24
 });
 
+function showSkillsOrbitPanel() {
+  if (skillOrbitRevealTimeline?.isActive()) return;
+  if (isSkillOrbitVisible) return;
+
+  isSkillOrbitVisible = true;
+
+  gsap.set(".skills-orbit-panel", {
+    autoAlpha: 1,
+    x: 0
+  });
+  gsap.set(".skills-orbit-center", {
+    y: 14,
+    scale: 0.9,
+    opacity: 0,
+    filter: "blur(8px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))"
+  });
+  gsap.set(skillsOrbitNodes, {
+    scale: 0.82,
+    opacity: 0
+  });
+
+  skillOrbitRevealTimeline = gsap.timeline()
+    .to(".skills-orbit-center", {
+      y: 0,
+      scale: 1,
+      opacity: 1,
+      filter: "blur(0px) drop-shadow(0 0 18px rgba(202, 255, 38, 0.22))",
+      duration: 0.42,
+      ease: "power3.out",
+      overwrite: true
+    })
+    .to(skillsOrbitNodes, {
+      scale: 1,
+      opacity: 1,
+      duration: 0.28,
+      ease: "power3.out",
+      overwrite: true,
+      stagger: {
+        each: 0.045,
+        from: "start"
+      }
+    }, "+=0.12")
+    .eventCallback("onComplete", () => {
+      skillOrbitRevealTimeline = null;
+      if (pendingSkillIndex !== null && pendingSkillIndex !== centerSkillIndex) {
+        const nextSkillIndex = pendingSkillIndex;
+        pendingSkillIndex = null;
+        updateSkillOrbit(nextSkillIndex);
+        return;
+      }
+
+      pendingSkillIndex = null;
+    });
+}
+
+function hideSkillsOrbitPanel() {
+  skillOrbitRevealTimeline?.kill();
+  skillOrbitRevealTimeline = null;
+  isSkillOrbitVisible = false;
+
+  gsap.to(".skills-orbit-panel", {
+    autoAlpha: 0,
+    y: -80,
+    filter: "blur(12px)",
+    duration: 0.46,
+    ease: "power2.in",
+    onComplete: () => {
+      gsap.set(".skills-orbit-panel", {
+        x: 24,
+        y: 0,
+        filter: "blur(0px)"
+      });
+    }
+  });
+}
+
 ScrollTrigger.create({
   trigger: ".projects",
-  start: "top top",
-  end: "bottom 10%",
-  onEnter: () => gsap.to(".skills-orbit-panel", { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }),
-  onEnterBack: () => gsap.to(".skills-orbit-panel", { autoAlpha: 1, x: 0, duration: 0.45, ease: "power3.out" }),
-  onLeave: () => gsap.to(".skills-orbit-panel", { autoAlpha: 0, x: 24, duration: 0.28, ease: "power2.in" }),
-  onLeaveBack: () => gsap.to(".skills-orbit-panel", { autoAlpha: 0, x: 24, duration: 0.28, ease: "power2.in" })
+  start: "top -12%",
+  end: "bottom 96%",
+  onEnter: showSkillsOrbitPanel,
+  onEnterBack: showSkillsOrbitPanel,
+  onLeave: hideSkillsOrbitPanel,
+  onLeaveBack: hideSkillsOrbitPanel
 });
 
 
@@ -1761,12 +2368,20 @@ function applyWave(activeIndex: number) {
   items.forEach((item, index) => {
     const distance = Math.abs(index - activeIndex);
     const direction = index < activeIndex ? -1 : 1;
-    const waveOffset = Math.min(distance * 15, 60);
-    const focusOffset = index === activeIndex ? -13 : waveOffset + direction * 4;
+    const belowDistance = Math.max(0, index - activeIndex);
+    const waveOffset = Math.min(distance * 7, 28);
+    const focusOffset = index === activeIndex ? -13 : waveOffset + direction * 2;
+    const itemOpacity = index === activeIndex
+      ? 1
+      : Math.max(0.18, 0.8 - distance * 0.07 - belowDistance * 0.06);
+    const itemBlur = index === activeIndex
+      ? 0
+      : Math.min(12, belowDistance * 2.1 + Math.max(0, activeIndex - index) * 0.45);
 
     gsap.to(item, {
       x: focusOffset,
-      opacity: index === activeIndex ? 1 : Math.max(0.26, 0.72 - distance * 0.09),
+      opacity: itemOpacity,
+      filter: `blur(${itemBlur}px)`,
       duration: 0.95,
       ease: "power2.out",
       overwrite: true
@@ -1778,97 +2393,89 @@ function updateSkillOrbit(activeIndex: number) {
   const activeSkill = skillIcons[activeIndex] ?? skillIcons[0];
 
   if (!skillsOrbitPanel || !skillsOrbitCenterIcon || !skillsOrbitName) return;
+  if (!isSkillOrbitVisible || skillOrbitRevealTimeline?.isActive()) {
+    pendingSkillIndex = activeIndex;
+    return;
+  }
   if (activeIndex === centerSkillIndex) return;
   if (skillOrbitTimeline?.isActive()) {
     pendingSkillIndex = activeIndex;
     return;
   }
 
-  const incomingNodeIndex = orbitNodeSkillIndexes.indexOf(activeIndex);
-  const incomingNode = incomingNodeIndex >= 0 ? skillsOrbitNodes[incomingNodeIndex] : null;
-  const outgoingSkill = skillIcons[centerSkillIndex] ?? skillIcons[0];
-  const previousCenterIndex = centerSkillIndex;
-
   gsap.set(".skills-orbit-center", {
     clearProps: "transform",
-    rotationY: 0,
-    scaleX: 1,
-    scaleY: 1,
-    transformPerspective: 900,
+    rotation: 0,
+    y: 0,
+    scale: 1,
     transformOrigin: "center center",
     force3D: true,
     filter: "blur(0px) drop-shadow(0 0 18px rgba(202, 255, 38, 0.22))",
     opacity: 1
   });
-  gsap.set(incomingNode ?? [], { scale: 1, opacity: 1 });
+  gsap.set(skillsOrbitNodes, { scale: 1, opacity: 1 });
 
-  skillOrbitTimeline = gsap.timeline({ defaults: { ease: "power3.out" } })
+  skillOrbitTimeline = gsap.timeline({ defaults: { ease: "power2.inOut" } })
     .to(".skills-orbit-center", {
-      rotationY: 92,
-      scaleX: 0.08,
-      scaleY: 0.96,
-      opacity: 0.45,
-      filter: "blur(1px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.35))",
-      duration: 0.42,
-      transformPerspective: 900,
+      y: 14,
+      scale: 0.9,
+      opacity: 0,
+      filter: "blur(8px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))",
+      duration: 0.28,
       transformOrigin: "center center",
       force3D: true,
       overwrite: true,
-      ease: "power3.in"
+      ease: "power2.in"
     })
-    .to(incomingNode ?? [], {
-      scale: 0.78,
-      opacity: 0.35,
-      duration: 0.18,
-      overwrite: true
+    .to(skillsOrbitNodes, {
+      scale: 0.96,
+      opacity: 0.55,
+      duration: 0.22,
+      overwrite: true,
+      stagger: {
+        each: 0.008,
+        from: "center"
+      }
     }, "<")
     .call(() => {
       skillsOrbitCenterIcon.src = activeSkill.icon;
       skillsOrbitCenterIcon.alt = activeSkill.label;
       skillsOrbitName.textContent = activeSkill.label;
-
-      if (incomingNode) {
-        const image = incomingNode.querySelector<HTMLImageElement>("img");
-
-        if (image) {
-          image.src = outgoingSkill.icon;
-          image.alt = outgoingSkill.label;
-        }
-
-        orbitNodeSkillIndexes[incomingNodeIndex] = previousCenterIndex;
-        incomingNode.style.setProperty("--float-delay", `${gsap.utils.random(-6, -0.4)}s`);
-      }
-
       centerSkillIndex = activeIndex;
-    })
-    .set(".skills-orbit-center", {
-      rotationY: -92,
-      scaleX: 0.08,
-      scaleY: 0.96,
-      transformPerspective: 900,
-      transformOrigin: "center center",
-      force3D: true
+      syncOrbitNodes(centerSkillIndex);
+
+      gsap.set(".skills-orbit-center", {
+        y: -10,
+        scale: 0.94,
+        opacity: 0,
+        filter: "blur(7px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))"
+      });
     })
     .to(".skills-orbit-center", {
-      rotationY: 0,
-      scaleX: 1,
-      scaleY: 1,
+      y: 0,
+      scale: 1,
       opacity: 1,
       filter: "blur(0px) drop-shadow(0 0 18px rgba(202, 255, 38, 0.22))",
-      duration: 0.52,
-      transformPerspective: 900,
+      duration: 0.42,
       transformOrigin: "center center",
       force3D: true,
       overwrite: true,
       ease: "power3.out"
     })
-    .to(incomingNode ?? [], {
+    .to(skillsOrbitNodes, {
       scale: 1,
       opacity: 1,
-      duration: 0.34,
+      duration: 0.28,
       overwrite: true,
-      ease: "power3.out"
+      ease: "power3.out",
+      stagger: {
+        each: 0.006,
+        from: "center"
+      }
     }, "<")
+    .set(".skills-orbit-center", {
+      clearProps: "transform"
+    })
     .eventCallback("onComplete", () => {
       skillOrbitTimeline = null;
       if (pendingSkillIndex !== null && pendingSkillIndex !== centerSkillIndex) {
@@ -1882,6 +2489,7 @@ function updateSkillOrbit(activeIndex: number) {
     });
 }
 
+syncOrbitNodes(centerSkillIndex);
 activate(items[0]);
 
 window.addEventListener("load", () => {
