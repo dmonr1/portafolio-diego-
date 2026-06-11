@@ -422,7 +422,18 @@ app.innerHTML = `
 `;
 
 const peruTime = document.querySelector<HTMLElement>("#peru-time");
+const sectionPreview = document.querySelector<HTMLElement>(".section-preview");
 const sectionPreviewItems = gsap.utils.toArray<HTMLElement>(".section-preview-item");
+const sectionPreviewLabels = gsap.utils.toArray<HTMLElement>(".section-preview-label");
+
+sectionPreviewLabels.forEach((label) => {
+  const text = label.textContent ?? "";
+
+  label.innerHTML = text
+    .split("")
+    .map((char) => `<span class="section-preview-label-char">${char === " " ? "&nbsp;" : char}</span>`)
+    .join("");
+});
 
 function setActiveSectionPreview(trigger: string) {
   const activeIndex = sectionPreviewItems.findIndex((item) => item.dataset.preview === trigger);
@@ -431,13 +442,41 @@ function setActiveSectionPreview(trigger: string) {
   const visibleStart = activeIndex >= sectionPreviewItems.length - 1
     ? maxVisibleStart
     : Math.min(Math.max(activeIndex - 1, 0), maxVisibleStart);
-
   sectionPreviewItems.forEach((item) => {
     const itemIndex = sectionPreviewItems.indexOf(item);
     const isVisible = itemIndex >= visibleStart && itemIndex < visibleStart + maxVisibleItems;
+    const wasActive = item.classList.contains("is-active");
+    const wasVisible = !item.classList.contains("is-preview-hidden");
+    const isActive = item.dataset.preview === trigger;
 
-    item.classList.toggle("is-active", item.dataset.preview === trigger);
+    item.classList.toggle("is-active", isActive);
     item.classList.toggle("is-preview-hidden", !isVisible);
+
+    if ((isActive && !wasActive) || (isVisible && !wasVisible)) {
+      animateSectionPreviewLabel(item);
+    }
+  });
+}
+
+function animateSectionPreviewLabel(item: HTMLElement) {
+  const chars = gsap.utils.toArray<HTMLElement>(".section-preview-label-char", item);
+  const orderedChars = [...chars].reverse();
+
+  gsap.killTweensOf(chars);
+  gsap.set(chars, {
+    y: 10,
+    opacity: 0
+  });
+
+  const labelTimeline = gsap.timeline();
+
+  orderedChars.forEach((char, index) => {
+    labelTimeline.to(char, {
+      y: 0,
+      opacity: 1,
+      duration: 0.34,
+      ease: "power3.out"
+    }, index * 0.09);
   });
 }
 
@@ -556,7 +595,7 @@ const smokeRenderer = new THREE.WebGLRenderer({
   alpha: true
 });
 
-const canvasPixelRatio = Math.min(window.devicePixelRatio, 1.35);
+const canvasPixelRatio = Math.min(window.devicePixelRatio, 1.15);
 
 smokeRenderer.setPixelRatio(canvasPixelRatio);
 smokeRenderer.setClearColor(0x050505, 1);
@@ -667,7 +706,7 @@ function startSmoke() {
 
 function renderSmoke(time: number) {
   if (!smokeRenderActive) {
-    requestAnimationFrame(renderSmoke);
+    window.setTimeout(() => requestAnimationFrame(renderSmoke), 180);
     return;
   }
 
@@ -682,6 +721,7 @@ requestAnimationFrame(renderSmoke);
 
 if (glowCanvas) {
   const glowCanvasEl = glowCanvas;
+  let glowRenderActive = false;
   const glowScene = new THREE.Scene();
   const glowCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const glowRenderer = new THREE.WebGLRenderer({
@@ -779,7 +819,7 @@ if (glowCanvas) {
   });
 
   glowScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), glowMaterial));
-  glowRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.2));
+  glowRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
 
   function resizeGlow() {
     const width = glowCanvasEl.clientWidth;
@@ -790,6 +830,11 @@ if (glowCanvas) {
   }
 
   function renderGlow(time: number) {
+    if (!glowRenderActive) {
+      window.setTimeout(() => requestAnimationFrame(renderGlow), 220);
+      return;
+    }
+
     glowUniforms.uTime.value = time * 0.001;
     glowRenderer.render(glowScene, glowCamera);
     requestAnimationFrame(renderGlow);
@@ -797,6 +842,9 @@ if (glowCanvas) {
 
   resizeGlow();
   window.addEventListener("resize", resizeGlow);
+  new IntersectionObserver(([entry]) => {
+    glowRenderActive = entry?.isIntersecting ?? false;
+  }, { rootMargin: "260px 0px" }).observe(glowCanvasEl);
   requestAnimationFrame(renderGlow);
 }
 
@@ -933,7 +981,7 @@ const projectsPlane = new THREE.Mesh(new THREE.PlaneGeometry(5.4, 3.6, 32, 32), 
 projectsPlane.renderOrder = 0;
 projectsScene.add(projectsPlane);
 
-const projectParticleCount = 440;
+const projectParticleCount = 240;
 const projectParticlePositions = new Float32Array(projectParticleCount * 3);
 const projectParticleVelocities = new Float32Array(projectParticleCount * 2);
 let nextProjectParticleIndex = 0;
@@ -1009,7 +1057,7 @@ const projectParticles = new THREE.Points(
 projectParticles.renderOrder = 2;
 projectsScene.add(projectParticles);
 
-const projectMaxConnections = 560;
+const projectMaxConnections = 260;
 const projectConnectionPositions = new Float32Array(projectMaxConnections * 2 * 3);
 const projectConnectionsGeometry = new THREE.BufferGeometry();
 projectConnectionsGeometry.setAttribute("position", new THREE.BufferAttribute(projectConnectionPositions, 3));
@@ -1081,7 +1129,7 @@ function resizeProjectsBackground() {
 function renderProjectsBackground(time: number) {
   if (!projectsRenderActive) {
     projectsLastFrame = 0;
-    requestAnimationFrame(renderProjectsBackground);
+    window.setTimeout(() => requestAnimationFrame(renderProjectsBackground), 180);
     return;
   }
 
@@ -1112,8 +1160,9 @@ function renderProjectsBackground(time: number) {
 
   for (let a = 0; a < projectParticleCount; a += 1) {
     const aIndex = a * 3;
+    const nearbyLimit = Math.min(projectParticleCount, a + 58);
 
-    for (let b = a + 1; b < projectParticleCount; b += 1) {
+    for (let b = a + 1; b < nearbyLimit; b += 1) {
       if (connectionVertexIndex >= projectMaxConnections * 2 * 3) break;
 
       const bIndex = b * 3;
@@ -1163,6 +1212,38 @@ gsap.registerPlugin(ScrollTrigger);
 });
 
 setActiveSectionPreview(".smoke-hero");
+gsap.set(".section-preview", {
+  autoAlpha: 0,
+  x: 28,
+  filter: "blur(6px)"
+});
+
+function revealSectionPreview() {
+  gsap.to(".section-preview", {
+    autoAlpha: 1,
+    x: 0,
+    filter: "blur(0px)",
+    duration: 0.8,
+    ease: "power3.out",
+    delay: 0.65
+  });
+  gsap.delayedCall(1.05, () => {
+    sectionPreviewItems.forEach((item) => {
+      if (!item.classList.contains("is-preview-hidden")) {
+        animateSectionPreviewLabel(item);
+      }
+    });
+  });
+}
+
+ScrollTrigger.create({
+  trigger: document.body,
+  start: "top top",
+  end: "bottom bottom",
+  onUpdate: (self) => {
+    sectionPreview?.style.setProperty("--preview-progress", `${self.progress}`);
+  }
+});
 
 ScrollTrigger.create({
   trigger: ".smoke-hero",
@@ -1315,10 +1396,12 @@ gsap.timeline({ defaults: { ease: "power3.out" } })
   .set(".preloader-intro", { autoAlpha: 1 })
   .fromTo(".intro-word:nth-child(1) .intro-char", {
     yPercent: 230,
-    rotation: 8
+    rotation: 8,
+    opacity: 1
   }, {
     yPercent: 0,
     rotation: 0,
+    opacity: 1,
     duration: 0.68,
     stagger: {
       each: 0.045,
@@ -1327,10 +1410,12 @@ gsap.timeline({ defaults: { ease: "power3.out" } })
   })
   .fromTo(".intro-word:nth-child(2) .intro-char", {
     yPercent: 230,
-    rotation: 8
+    rotation: 8,
+    opacity: 1
   }, {
     yPercent: 0,
     rotation: 0,
+    opacity: 1,
     duration: 0.68,
     stagger: {
       each: 0.045,
@@ -1340,6 +1425,7 @@ gsap.timeline({ defaults: { ease: "power3.out" } })
   .to(".intro-word:nth-child(1) .intro-char", {
     yPercent: -230,
     rotation: -8,
+    opacity: 0,
     duration: 0.62,
     ease: "power3.inOut",
     stagger: {
@@ -1350,6 +1436,7 @@ gsap.timeline({ defaults: { ease: "power3.out" } })
   .to(".intro-word:nth-child(2) .intro-char", {
     yPercent: -230,
     rotation: -8,
+    opacity: 0,
     duration: 0.62,
     ease: "power3.inOut",
     stagger: {
@@ -1363,6 +1450,7 @@ gsap.timeline({ defaults: { ease: "power3.out" } })
       document.body.classList.remove("is-scroll-locked");
       lenis.start();
       heroTimeline.play();
+      revealSectionPreview();
     });
   }, undefined, "-=0.38")
   .to(".preloader-intro", {
@@ -1744,7 +1832,7 @@ gsap.timeline({
   .fromTo(".skills-section-title span", {
     y: 48,
     opacity: 0,
-    filter: "blur(28px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.28))"
+    filter: "blur(14px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.28))"
   }, {
     y: 0,
     opacity: 1,
@@ -1762,7 +1850,7 @@ gsap.timeline({
   .to(".skills-section-title span", {
     y: -42,
     opacity: 0,
-    filter: "blur(16px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.18))",
+    filter: "blur(8px) drop-shadow(0 0 30px rgba(95, 189, 70, 0.18))",
     duration: 0.68,
     ease: "power3.inOut"
   }, "+=1.2")
@@ -1781,7 +1869,7 @@ if (caseTrack) {
   gsap.fromTo(".case-card", {
     y: -120,
     opacity: 0,
-    filter: "blur(9px)"
+    filter: "blur(4px)"
   }, {
     y: 0,
     opacity: 1,
@@ -1839,7 +1927,7 @@ gsap.timeline({
   .fromTo([".projects-section-title", ".projects-section-note"], {
     y: 34,
     opacity: 0,
-    filter: "blur(14px)"
+    filter: "blur(6px)"
   }, {
     y: 0,
     opacity: 1,
@@ -1852,7 +1940,7 @@ gsap.timeline({
 gsap.fromTo(".contact-title", {
   x: "112vw",
   opacity: 0.28,
-  filter: "blur(5px)"
+  filter: "blur(3px)"
 }, {
   x: 0,
   opacity: 1,
@@ -1879,7 +1967,7 @@ gsap.fromTo(".contact-portrait", {
   x: 90,
   y: 24,
   opacity: 0,
-  filter: "blur(6px) grayscale(0.15) contrast(1.08)"
+  filter: "blur(3px) grayscale(0.15) contrast(1.08)"
 }, {
   x: 0,
   y: 0,
@@ -1896,7 +1984,7 @@ gsap.fromTo(".contact-portrait", {
 
 gsap.to(".contact-portrait", {
   opacity: 0,
-  filter: "blur(5px) grayscale(0.15) contrast(1.08)",
+  filter: "blur(3px) grayscale(0.15) contrast(1.08)",
   ease: "none",
   scrollTrigger: {
     trigger: ".black-section",
@@ -1916,7 +2004,7 @@ const contactDetailRanges = [
 gsap.set(contactDetailItems, {
   y: 420,
   opacity: 0,
-  filter: "blur(5px)"
+  filter: "blur(3px)"
 });
 
 contactDetailItems.forEach((item, index) => {
@@ -1939,7 +2027,7 @@ contactDetailItems.forEach((item, index) => {
 gsap.fromTo(".contact-socials a", {
   y: 80,
   opacity: 0,
-  filter: "blur(4px)",
+  filter: "blur(2px)",
   rotate: 0
 }, {
   y: 0,
@@ -1958,7 +2046,7 @@ gsap.fromTo(".contact-socials a", {
 
 gsap.to(".glow-content", {
   opacity: 0.82,
-  filter: "blur(1.5px)",
+  filter: "blur(0.5px)",
   ease: "none",
   scrollTrigger: {
     trigger: ".black-section",
@@ -1971,7 +2059,7 @@ gsap.to(".glow-content", {
 gsap.to(".case-viewport", {
   y: -180,
   opacity: 0.18,
-  filter: "blur(3px)",
+  filter: "blur(1px)",
   ease: "none",
   scrollTrigger: {
     trigger: ".black-section",
@@ -2123,7 +2211,7 @@ gsap.to(path, {
 gsap.set(".project-item", {
   y: 120,
   opacity: 0,
-  filter: "blur(18px)"
+  filter: "blur(6px)"
 });
 
 const projectsFillTimeline = gsap.timeline({ paused: true });
@@ -2246,6 +2334,7 @@ function showSkillsOrbitPanel() {
     autoAlpha: 1,
     x: 0
   });
+  skillsOrbitPanel?.classList.add("is-orbit-visible");
   gsap.set(".skills-orbit-center", {
     y: 14,
     scale: 0.9,
@@ -2295,11 +2384,12 @@ function hideSkillsOrbitPanel() {
   skillOrbitRevealTimeline?.kill();
   skillOrbitRevealTimeline = null;
   isSkillOrbitVisible = false;
+  skillsOrbitPanel?.classList.remove("is-orbit-visible");
 
   gsap.to(".skills-orbit-panel", {
     autoAlpha: 0,
     y: -80,
-    filter: "blur(12px)",
+    filter: "blur(4px)",
     duration: 0.46,
     ease: "power2.in",
     onComplete: () => {
@@ -2376,7 +2466,7 @@ function applyWave(activeIndex: number) {
       : Math.max(0.18, 0.8 - distance * 0.07 - belowDistance * 0.06);
     const itemBlur = index === activeIndex
       ? 0
-      : Math.min(12, belowDistance * 2.1 + Math.max(0, activeIndex - index) * 0.45);
+      : Math.min(5, belowDistance * 0.9 + Math.max(0, activeIndex - index) * 0.25);
 
     gsap.to(item, {
       x: focusOffset,
@@ -2420,7 +2510,7 @@ function updateSkillOrbit(activeIndex: number) {
       y: 14,
       scale: 0.9,
       opacity: 0,
-      filter: "blur(8px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))",
+      filter: "blur(3px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))",
       duration: 0.28,
       transformOrigin: "center center",
       force3D: true,
@@ -2448,7 +2538,7 @@ function updateSkillOrbit(activeIndex: number) {
         y: -10,
         scale: 0.94,
         opacity: 0,
-        filter: "blur(7px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))"
+        filter: "blur(3px) drop-shadow(0 0 22px rgba(202, 255, 38, 0.28))"
       });
     })
     .to(".skills-orbit-center", {

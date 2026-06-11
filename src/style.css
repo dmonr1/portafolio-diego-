@@ -214,6 +214,7 @@ body.is-scroll-locked {
 }
 
 .section-preview {
+  --preview-progress: 0;
   position: fixed;
   right: clamp(18px, 2.4vw, 34px);
   top: 50%;
@@ -228,6 +229,30 @@ body.is-scroll-locked {
   color: white;
   opacity: 1;
   will-change: transform, opacity;
+}
+
+.section-preview::before,
+.section-preview::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  right: -13px;
+  width: 3px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.section-preview::before {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.section-preview::after {
+  height: calc((100% - 14px) * var(--preview-progress));
+  bottom: auto;
+  background: #ffffff;
+  transform-origin: top;
+  transition: height 0.12s linear;
 }
 
 .section-preview-item {
@@ -280,6 +305,7 @@ body.is-scroll-locked {
 }
 
 .section-preview-label {
+  position: relative;
   display: block;
   max-height: 0;
   margin: 0;
@@ -297,11 +323,42 @@ body.is-scroll-locked {
   transition: max-height 0.24s ease, margin 0.24s ease, opacity 0.24s ease, transform 0.24s ease;
 }
 
+.section-preview-label-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.section-preview-label::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.28s ease;
+}
+
 .section-preview-item.is-active .section-preview-label {
-  max-height: 1rem;
+  max-height: 1.5rem;
   margin-top: 7px;
+  padding-bottom: 5px;
   opacity: 1;
   transform: translateY(0);
+  overflow: visible;
+}
+
+.section-preview-item.is-active .section-preview-label::after {
+  transform: scaleX(1);
+}
+
+.section-preview-item.is-active .section-preview-label {
+  text-decoration: underline;
+  text-decoration-color: #ffffff;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 
 .reveal-text {
@@ -526,9 +583,8 @@ body.is-scroll-locked {
   display: inline-block;
   padding: 0.04em 0.24em 0.11em;
   background: #213f18;
-  font-family: "Bodoni Moda", "General Sans Italic", "General Sans", serif;
   font-weight: 700;
-  font-style: italic;
+  font-style: serif;
   line-height: 0.92;
 }
 
@@ -1119,6 +1175,10 @@ body.is-scroll-locked {
   transform: translate(calc(-50% + var(--float-x)), calc(-50% + var(--float-y)));
   animation: skillFloat 7.8s ease-in-out infinite alternate;
   animation-delay: var(--float-delay);
+}
+
+.skills-orbit-panel:not(.is-orbit-visible) .skills-orbit-node {
+  animation-play-state: paused;
 }
 
 .skills-orbit-node img {
